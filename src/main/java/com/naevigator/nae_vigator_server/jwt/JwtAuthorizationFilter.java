@@ -1,4 +1,4 @@
-package com.naevigator.server.server.jwt;
+package com.naevigator.nae_vigator_server.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

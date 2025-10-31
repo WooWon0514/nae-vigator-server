@@ -1,4 +1,4 @@
-package com.naevigator.server.server.oauth2.util;
+package com.naevigator.nae_vigator_server.oauth2.util;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

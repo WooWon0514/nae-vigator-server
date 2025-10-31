@@ -1,6 +1,6 @@
-package com.naevigator.server.server.oauth2.repository;
+package com.naevigator.nae_vigator_server.oauth2.repository;
 
-import com.naevigator.server.server.oauth2.util.CookieUtils;
+import com.naevigator.nae_vigator_server.oauth2.util.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;

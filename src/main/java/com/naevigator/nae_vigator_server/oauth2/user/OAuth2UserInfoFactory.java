@@ -1,6 +1,6 @@
-package com.naevigator.server.server.oauth2.user;
+package com.naevigator.nae_vigator_server.oauth2.user;
 
-import com.naevigator.server.server.oauth2.exception.OAuth2AuthenticationProcessingException;
+import com.naevigator.nae_vigator_server.oauth2.exception.OAuth2AuthenticationProcessingException;
 
 import java.util.Map;
 

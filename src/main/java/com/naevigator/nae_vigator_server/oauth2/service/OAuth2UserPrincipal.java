@@ -1,6 +1,7 @@
-package com.naevigator.server.server.oauth2.service;
+package com.naevigator.nae_vigator_server.oauth2.service;
 
-import com.naevigator.server.server.oauth2.user.OAuth2UserInfo;
+import com.naevigator.nae_vigator_server.oauth2.user.OAuth2UserInfo;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 //OAuth2User + UserDetails 구현한 래퍼
 // -> SuccessHandler에서 principal 접근할 때 안전하도록
+@Getter
 public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
 
     private final OAuth2UserInfo userInfo;
@@ -62,10 +64,6 @@ public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
     @Override
     public String getName() {
         return userInfo.getEmail();
-    }
-
-    public OAuth2UserInfo getUserInfo() {
-        return userInfo;
     }
 
 }

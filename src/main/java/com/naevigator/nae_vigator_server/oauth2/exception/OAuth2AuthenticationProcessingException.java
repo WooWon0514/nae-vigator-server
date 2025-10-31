@@ -1,4 +1,4 @@
-package com.naevigator.server.server.oauth2.exception;
+package com.naevigator.nae_vigator_server.oauth2.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

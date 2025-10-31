@@ -1,4 +1,4 @@
-package com.naevigator.server.server.oauth2.user;
+package com.naevigator.nae_vigator_server.oauth2.user;
 
 import java.util.Map;
 

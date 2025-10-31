@@ -1,8 +1,8 @@
-package com.naevigator.server.server.oauth2.service;
+package com.naevigator.nae_vigator_server.oauth2.service;
 
-import com.naevigator.server.server.oauth2.exception.OAuth2AuthenticationProcessingException;
-import com.naevigator.server.server.oauth2.user.OAuth2UserInfo;
-import com.naevigator.server.server.oauth2.user.OAuth2UserInfoFactory;
+import com.naevigator.nae_vigator_server.oauth2.exception.OAuth2AuthenticationProcessingException;
+import com.naevigator.nae_vigator_server.oauth2.user.OAuth2UserInfo;
+import com.naevigator.nae_vigator_server.oauth2.user.OAuth2UserInfoFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

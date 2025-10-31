@@ -1,4 +1,4 @@
-package com.naevigator.server.server.jwt;
+package com.naevigator.nae_vigator_server.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

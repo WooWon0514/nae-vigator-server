@@ -1,4 +1,4 @@
-package com.naevigator.server.server.api;
+package com.naevigator.nae_vigator_server.api;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,7 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.time.Duration;
 import java.util.Map;
 
-import static com.naevigator.server.server.oauth2.repository.HttpCookieOAuth2AuthorizationRequestRepository.MODE_PARAM_COOKIE_NAME;
+import static com.naevigator.nae_vigator_server.oauth2.repository.HttpCookieOAuth2AuthorizationRequestRepository.MODE_PARAM_COOKIE_NAME;
 
 @RestController
 public class DevController {

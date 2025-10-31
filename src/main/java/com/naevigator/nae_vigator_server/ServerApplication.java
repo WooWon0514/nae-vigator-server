@@ -1,4 +1,4 @@
-package com.naevigator.server.server;
+package com.naevigator.nae_vigator_server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

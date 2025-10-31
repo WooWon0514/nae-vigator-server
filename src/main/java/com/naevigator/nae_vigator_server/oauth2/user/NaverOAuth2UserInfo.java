@@ -1,8 +1,8 @@
-package com.naevigator.server.server.oauth2.user;
+package com.naevigator.nae_vigator_server.oauth2.user;
 
 import java.util.Map;
 
-public class KakaoOAuth2UserInfo implements OAuth2UserInfo {
+public class NaverOAuth2UserInfo implements OAuth2UserInfo {
 
     private final Map<String, Object> attributes;
     private final String accessToken;
@@ -14,25 +14,18 @@ public class KakaoOAuth2UserInfo implements OAuth2UserInfo {
     private final String nickName;
     private final String profileImageUrl;
 
-    public KakaoOAuth2UserInfo(String accessToken, Map<String, Object> attributes) {
+    public NaverOAuth2UserInfo(String accessToken, Map<String, Object> attributes) {
         this.accessToken = accessToken;
-        // attributes 맵의 kakao_account 키의 값에 실제 attributes 맵이 할당되어 있음
-        Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-        Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
-        this.attributes = kakaoProfile;
-
-        this.id = ((Long) attributes.get("id")).toString();
-        this.email = (String) kakaoAccount.get("email");
-
-        this.name = null;
+        // attributes 맵의 response 키의 값에 실제 attributes 맵이 할당되어 있음
+        this.attributes = (Map<String, Object>) attributes.get("response");
+        this.id = (String) this.attributes.get("id");
+        this.email = (String) this.attributes.get("email");
+        this.name = (String) this.attributes.get("name");
         this.firstName = null;
         this.lastName = null;
         this.nickName = (String) attributes.get("nickname");
 
-        this.profileImageUrl = (String) attributes.get("profile_image_url");
-
-        this.attributes.put("id", id);
-        this.attributes.put("email", this.email);
+        this.profileImageUrl = (String) attributes.get("profile_image");
     }
 
     @Override

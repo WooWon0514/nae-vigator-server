@@ -1,7 +1,7 @@
-package com.naevigator.server.server.oauth2.handler;
+package com.naevigator.nae_vigator_server.oauth2.handler;
 
-import com.naevigator.server.server.oauth2.repository.HttpCookieOAuth2AuthorizationRequestRepository;
-import com.naevigator.server.server.oauth2.util.CookieUtils;
+import com.naevigator.nae_vigator_server.oauth2.repository.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.naevigator.nae_vigator_server.oauth2.util.CookieUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
-import static com.naevigator.server.server.oauth2.repository.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
+import static com.naevigator.nae_vigator_server.oauth2.repository.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 
 @Slf4j
 @RequiredArgsConstructor
