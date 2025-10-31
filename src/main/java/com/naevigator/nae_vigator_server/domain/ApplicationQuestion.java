@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "documents")
-public class Document {
+@Table(name = "application_questions")
+public class ApplicationQuestion {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,16 +22,12 @@ public class Document {
     @JoinColumn(name = "application_id", nullable = false)
     private Application application;
 
-    @Column(nullable = false, length = 20)
-    private String type;      // COVER, SELF_INTRO, AI, ...
+    @Column(name = "orderNo", nullable = false)
+    private Integer orderNo;
 
     @Lob
-    private String content;
-
-    private Integer version;
-
     @Column(nullable = false)
-    private boolean isAigenerated;
+    private String content;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;

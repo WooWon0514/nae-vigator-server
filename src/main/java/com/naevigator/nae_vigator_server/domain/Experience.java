@@ -1,41 +1,54 @@
 package com.naevigator.nae_vigator_server.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Table(name = "experience")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "experiences")
 public class Experience {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Users user;
+    // FK
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String title;
 
     @Lob
     private String content;
 
+    @Column(name = "summary3lines", length = 500, nullable = false)
+    private String summary3lines;
+
+    @Column(length = 255)
     private String tags;
+
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @CreationTimestamp
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp
+    @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    private LocalDateTime deletedAt;
+
+    // bridge
+    @OneToMany(mappedBy = "experience", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExperienceApplication> experienceApplications = new ArrayList<>();
 }

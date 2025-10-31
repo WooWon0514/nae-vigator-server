@@ -1,6 +1,6 @@
 package com.naevigator.nae_vigator_server.service;
 
-import com.naevigator.nae_vigator_server.domain.Users;
+import com.naevigator.nae_vigator_server.domain.User;
 import com.naevigator.nae_vigator_server.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +13,9 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
-    public Users signUp(String email, String password, String name) {
+    public User signUp(String email, String password, String name) {
         // 여기에 나중에 비밀번호 암호화 로직 등을 추가할 예정입니다.
-        Users newUser = new Users();
+        User newUser = new User();
         newUser.setEmail(email);
         newUser.setPassword(password); // 지금은 비밀번호를 그대로 저장합니다.
         newUser.setName(name);

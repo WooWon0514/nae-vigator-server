@@ -1,9 +1,10 @@
 package com.naevigator.nae_vigator_server.repository;
 
 import com.naevigator.nae_vigator_server.domain.Experience;
+import com.naevigator.nae_vigator_server.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
 public interface ExperienceRepository extends JpaRepository<Experience, Long> {
+    List<Experience> findByUser(User user);
 }
