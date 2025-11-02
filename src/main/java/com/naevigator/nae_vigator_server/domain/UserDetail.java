@@ -39,4 +39,7 @@ public class UserDetail {
     private LocalDateTime updatedAt;
 
     private LocalDateTime deletedAt;
+
+    public void setUserId(Long id) {
+    }
 }

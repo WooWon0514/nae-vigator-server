@@ -3,11 +3,12 @@ package com.naevigator.nae_vigator_server;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
 @SpringBootTest
-class NaeVigatorServerApplicationTests {
+        class ServerApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+        @Test
+        void contextLoads() {
+        }
 
-}
+    }

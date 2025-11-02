@@ -32,7 +32,7 @@ public class TokenProvider {
     void init() {
         try {
             // Base64로 인코딩된 경우
-            byte[] keyBytes = Decoders.BASE64.decode(secret);
+            byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
             this.key = Keys.hmacShaKeyFor(keyBytes);
         } catch (IllegalArgumentException e) {
             // Base64 디코딩 실패 시, 평문 문자열로 처리
