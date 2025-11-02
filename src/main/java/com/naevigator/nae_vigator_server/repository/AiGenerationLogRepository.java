@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface AiGenerationLogRepository extends JpaRepository<AiGenerationLog, Long> {
     List<AiGenerationLog> findByUser(User user);
+
+    List<AiGenerationLog> findByUserId(Long userId);
 }

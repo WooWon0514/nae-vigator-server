@@ -1,33 +1,50 @@
 package com.naevigator.nae_vigator_server.controller;
 
 import com.naevigator.nae_vigator_server.service.AuthService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.naevigator.nae_vigator_server.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth") // /api/auth 로 시작하는 모든 요청은 이 Controller가 담당합니다.
+@RequestMapping("/api/v1/members")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userService; // 2. 온보딩을 위한 UserService 추가
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
-
-    // POST /api/auth/signup 요청을 처리하는 메소드입니다.
+    // 3. 기존 회원가입 API (POST /api/v1/members/signup)
     @PostMapping("/signup")
-    public String signUp(@RequestBody Map<String, String> userMap) {
-        // AuthService에게 회원가입 처리를 시킵니다.
+    public ResponseEntity<String> signUp(@RequestBody Map<String, String> userMap) {
         authService.signUp(
                 userMap.get("email"),
                 userMap.get("password"),
                 userMap.get("name")
         );
-        // 프론트엔드에게 성공 메시지를 보냅니다.
-        return "회원가입이 완료되었습니다.";
+        return ResponseEntity.ok("회원가입이 완료되었습니다.");
+    }
+
+    // 4. 여기에 온보딩(프로필 업데이트) API를 추가합니다!
+    @PutMapping("/me/profile")
+    public ResponseEntity<String> updateUserProfile(@RequestBody Map<String, String> profileMap) {
+        Long userId = 1L;
+
+        userService.updateUserProfile(
+                userId,
+                profileMap.get("jobCategory"),
+                profileMap.get("jobRole")
+        );
+        return ResponseEntity.ok("프로필이 성공적으로 업데이트되었습니다.");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Map<String, String> userMap) {
+        // String token = authService.login(userMap.get("email"), userMap.get("password"));
+        // return ResponseEntity.ok(token);
+
+        return ResponseEntity.ok("로그인 성공 (JWT 토큰 발급 예정)");
     }
 }

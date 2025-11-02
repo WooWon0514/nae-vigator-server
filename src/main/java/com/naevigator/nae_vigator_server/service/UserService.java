@@ -1,23 +1,29 @@
 package com.naevigator.nae_vigator_server.service;
 
 import com.naevigator.nae_vigator_server.domain.User;
+import com.naevigator.nae_vigator_server.domain.UserDetail;
+import com.naevigator.nae_vigator_server.repository.UserDetailRepository;
 import com.naevigator.nae_vigator_server.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserDetailRepository userDetailRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public User getUserProfile(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public UserDetail getUserDetail(Long userId) {
+        return userDetailRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User detail not found"));
     }
 
     public void updateUserProfile(Long userId, String jobCategory, String jobRole) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. id=" + userId));
-
     }
 }

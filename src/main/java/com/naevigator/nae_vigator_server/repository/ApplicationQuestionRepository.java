@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ApplicationQuestionRepository extends JpaRepository<ApplicationQuestion, Long> {
     List<ApplicationQuestion> findByApplicationOrderByOrderNoAsc(Application application);
+
+    List<ApplicationQuestion> findByApplicationId(Long applicationId);
 }

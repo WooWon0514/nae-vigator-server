@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface DocumentRepository extends JpaRepository<Document, Long> {
     List<Document> findByApplication(Application application);
+
+    List<Document> findByApplicationId(Long applicationId);
 }
