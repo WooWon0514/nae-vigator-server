@@ -58,4 +58,10 @@ public class User {
     // 1:N
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AiGenerationLog> aiGenerationLogs = new ArrayList<>();
+
+    public void setJobCategory(String jobCategory) {
+    }
+
+    public void setJobRole(String jobRole) {
+    }
 }

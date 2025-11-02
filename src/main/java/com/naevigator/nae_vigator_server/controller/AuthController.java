@@ -14,9 +14,9 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
-    private final UserService userService; // 2. 온보딩을 위한 UserService 추가
+    private final UserService userService;
 
-    // 3. 기존 회원가입 API (POST /api/v1/members/signup)
+    // 5. 기존 회원가입 API (POST /api/v1/members/signup)
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody Map<String, String> userMap) {
         authService.signUp(
@@ -27,7 +27,6 @@ public class AuthController {
         return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
 
-    // 4. 여기에 온보딩(프로필 업데이트) API를 추가합니다!
     @PutMapping("/me/profile")
     public ResponseEntity<String> updateUserProfile(@RequestBody Map<String, String> profileMap) {
         Long userId = 1L;
