@@ -2,73 +2,75 @@ package com.naevigator.nae_vigator_server.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie; // ◀◀◀ Import
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value; // ◀◀◀ Import
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-// import org.springframework.util.StringUtils; // 헤더 방식이 아니므로 필요 없음
 import java.io.IOException;
-import java.util.Arrays; // ◀◀◀ Import
+import java.util.Arrays;
+import java.util.List; // ◀◀◀ List Import 추가
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    // private static final String AUTH_HEADER = "Authorization"; // 필요 없음
-    // private static final String BEARER = "Bearer "; // 필요 없음
     private final TokenProvider tokenProvider;
 
-    // ▼▼▼ application.yml의 쿠키 이름을 가져옴
     @Value("${jwt.cookie-name}")
     private String cookieName;
+
+    // ▼▼▼ ★★★★★ 검사를 "무시"할 경로 목록을 만듭니다 ★★★★★ ▼▼▼
+    private final List<String> permitAllPaths = List.of(
+            "/login",
+            "/oauth2/",
+            "/api/v1/members/",
+            "/dev/",
+            "/h2-console/"
+    );
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        // --- 1. (가장 중요) 공용 경로는 토큰 검사 없이 즉시 통과 ---
-        // (이게 없으면 /oauth2/authorization/naver가 막힙니다)
-        String path = request.getServletPath();
-        if (
-                path.equals("/login") ||
-                        path.startsWith("/oauth2/") ||
-                        path.startsWith("/api/v1/members/") || // AuthController
-                        path.startsWith("/dev/") ||
-                        path.startsWith("/h2-console/")
-        ) {
+        // ▼▼▼ ★★★★★ getServletPath() 대신 getRequestURI() 사용 ★★★★★ ▼▼▼
+        String path = request.getRequestURI(); // ◀◀◀ getServletPath() 대신 사용
+
+        // 1. "무시"할 경로인지 확인
+        boolean isPermitted = permitAllPaths.stream()
+                .anyMatch(permitPath -> path.startsWith(permitPath));
+
+        if (isPermitted) {
             filterChain.doFilter(request, response);
             return;
         }
+        // ▲▲▲ --- ▲▲▲ --- ▲▲▲
 
-        // --- 2. 쿠키에서 토큰 추출 및 검증 ---
-        String token = resolveToken(request); // 1) 토큰 추출 (from Cookie)
-        if (token != null && tokenProvider.validateToken(token)) { // 2) 검증
-            Authentication auth = tokenProvider.getAuthentication(token); // 3) 인증 객체 생성
-            SecurityContextHolder.getContext().setAuthentication(auth);  // 4) 컨텍스트 주입
+        // --- 2. (보호된 경로) 쿠키에서 토큰 추출 및 검증 ---
+        String token = resolveToken(request);
+        if (token != null && tokenProvider.validateToken(token)) {
+            Authentication auth = tokenProvider.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(auth);
         }
+
         filterChain.doFilter(request, response);
     }
 
-    // ▼▼▼ ★★★★★ 헤더 대신 쿠키에서 토큰을 찾는 메소드 ★★★★★ ▼▼▼
+    // 쿠키에서 토큰을 찾는 resolveToken 메소드 (이전과 동일)
     private String resolveToken(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
             return null;
         }
 
-        // 쿠키 배열을 스트림으로 변환하여
         return Arrays.stream(cookies)
-                // 쿠키 이름이 yml에 설정된 이름("access_token")과 같은지 확인
                 .filter(cookie -> cookie.getName().equals(cookieName))
-                // 쿠키의 값을 가져옴
                 .map(Cookie::getValue)
-                // 첫 번째 값을 찾아서 반환
                 .findFirst()
                 .orElse(null);
     }
