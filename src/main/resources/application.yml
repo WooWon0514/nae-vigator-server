@@ -1,5 +1,3 @@
-# application.yml (이 내용으로 덮어쓰기)
-
 spring:
   # 1. import는 spring: config: 아래에 둡니다.
   config:
@@ -49,9 +47,9 @@ server:
   port: 8080
 
 jwt:
-  # secret 키는 secret 파일로 옮깁니다.
+  cookie-domain: ""
   access-exp-minutes: 60
   cookie-name: access_token
-  cookie-domain: localhost
+  # cookie-domain: localhost
 
 # (logging 설정은 그대로...)

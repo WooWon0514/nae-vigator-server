@@ -1,6 +1,5 @@
 package com.naevigator.nae_vigator_server;
 
-// --- (import 목록은 동일) ---
 import com.naevigator.nae_vigator_server.jwt.JwtAuthorizationFilter;
 import com.naevigator.nae_vigator_server.oauth2.handler.OAuth2AuthenticationFailureHandler;
 import com.naevigator.nae_vigator_server.oauth2.handler.OAuth2AuthenticationSuccessHandler;
@@ -14,8 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -31,26 +28,14 @@ public class SecurityConfig {
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(h -> h.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/login",
-                                "/oauth2/**",
-                                "/login/oauth2/**",
-                                "/api/v1/members/**",
-                                "/h2-console/**"
-                        ).permitAll()
-                        // ▲▲▲ ★★★★★ --- ▲▲▲ ★★★★★
-                        .anyRequest().authenticated()) // <- "/" 경로는 이제 여기에 걸리게 됩니다.
+                        .requestMatchers("/", "/login", "/oauth2/**", "/dev/**", "/h2-console/**").permitAll()
+                        .anyRequest().authenticated())
                 .oauth2Login(oauth -> oauth
                         .authorizationEndpoint(ep ->
                                 ep.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
@@ -62,4 +47,5 @@ public class SecurityConfig {
         http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
 }

@@ -49,6 +49,7 @@ public class OAuth2AuthenticationFailureHandler  extends SimpleUrlAuthentication
         httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
 
         // 5) 리다이렉트
-        getRedirectStrategy().sendRedirect(request, response, target);
+        getRedirectStrategy().sendRedirect(request, response, redirect);
+
     }
 }
